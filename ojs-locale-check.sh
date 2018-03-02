@@ -17,7 +17,7 @@ argok=0
 print_usage() {
     echo "Usage: $(basename $0) [ -u ] [ -m ] [ -o [ -d ] ] [ -e ] [ -l <locale> ]"
     echo
-    echo "-u	check for duplicate keys (checks both reference and target (-l) locale"
+    echo "-u	check for duplicate keys"
     echo "-m	check for missing keys"
     echo "-o	check for obsolete keys"
     echo "-d	remove obsolete keys (noop without -o)"
@@ -64,13 +64,6 @@ main() {
 		if [ ${ckeys[$key]} -gt 1 ]; then
 		    echo "DUPLICATE: $key in $catalog"
 		    grep "<message key=\"$key\"" $catalog
-		fi
-	    done
-	    for key in ${!rkeys[@]}
-	    do
-		if [ ${rkeys[$key]} -gt 1 ]; then
-		    echo "DUPLICATE: $key in $reference"
-		    grep "<message key=\"$key\"" $reference
 		fi
 	    done
 	fi
