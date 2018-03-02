@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Do key checks on a OJS locale files
+# Do key checks on OJS locale files
 
 # Global arrays to hold keys
 declare -A rkeys
@@ -58,14 +58,14 @@ main() {
 	fi
 	# Check for duplicates and list them if found
 	if [ $dups -eq 1 ]; then
-	    for key in ${!ckeys[@]};
+	    for key in ${!ckeys[@]}
 	    do
 		if [ ${ckeys[$key]} -gt 1 ]; then
 		    echo "DUPLICATE: $key in $catalog"
 		    grep "<message key=\"$key\"" $catalog
 		fi
 	    done
-	    for key in ${!rkeys[@]};
+	    for key in ${!rkeys[@]}
 	    do
 		if [ ${rkeys[$key]} -gt 1 ]; then
 		    echo "DUPLICATE: $key in $reference"
@@ -75,7 +75,7 @@ main() {
 	fi
 	# Check for missing translations
 	if [ $missing -eq 1 ]; then
-	    for key in ${!rkeys[@]};
+	    for key in ${!rkeys[@]}
 	    do
 		if [ -z ${ckeys[$key]} ]; then
 		    echo "MISSING: $key in $catalog"
@@ -84,7 +84,7 @@ main() {
 	fi
 	# Check for obsolete keys
 	if [ $obsolete -eq 1 ]; then
-	    for key in ${!ckeys[@]};
+	    for key in ${!ckeys[@]}
 	    do
 		if [ -z ${rkeys[$key]} ]; then
 		    echo "OBSOLETE: $key in $catalog"
@@ -99,7 +99,7 @@ main() {
 	fi
 	# Check for translations copied verbatim from the reference
 	if [ $copy -eq 1 -a -r $reference ]; then
-	    for key in ${!ckeys[@]};
+	    for key in ${!ckeys[@]}
 	    do
 		# Single line key
 		ref="$(sed -n "/<message key=\"$key\">.*<\/message>/p" $reference)"
@@ -124,17 +124,23 @@ if [ $# -gt 0 ]; then
     do
         case $opt in
             u)
-                dups=1;;
+                dups=1
+		;;
 	    m)
-		missing=1;;
+		missing=1
+		;;
 	    o)
-		obsolete=1;;
+		obsolete=1
+		;;
 	    d)
-		delete=1;;
+		delete=1
+		;;
 	    e)
-		copy=1;;
+		copy=1
+		;;
 	    l)
-		locale=$OPTARG;;
+		locale=$OPTARG
+		;;
 	    \?|h)
                 print_usage
                 exit 1
