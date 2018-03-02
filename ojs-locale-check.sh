@@ -12,6 +12,7 @@ obsolete=0
 delete=0
 copy=0
 locale=da_DK
+argok=0
 
 print_usage() {
     echo "Usage: $(basename $0) [ -u ] [ -m ] [ -o [ -d ] ] [ -e ] [ -l <locale> ]"
@@ -125,18 +126,22 @@ if [ $# -gt 0 ]; then
         case $opt in
             u)
                 dups=1
+		argok=1
 		;;
 	    m)
 		missing=1
+		argok=1
 		;;
 	    o)
 		obsolete=1
+		argok=1
 		;;
 	    d)
 		delete=1
 		;;
 	    e)
 		copy=1
+		argok=1
 		;;
 	    l)
 		locale=$OPTARG
@@ -152,6 +157,9 @@ else
     print_usage
     exit 1
 fi
+
+# Check params
+[ $argok -eq 0 ] && print_usage && exit 1
 
 # Go
 main
